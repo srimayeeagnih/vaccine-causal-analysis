@@ -1,0 +1,11 @@
+pandas
+openpyxl
+xlrd
+country_converter
+matplotlib
+seaborn
+numpy
+econml
+xgboost
+scikit-learn
+scipy

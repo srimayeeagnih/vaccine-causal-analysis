@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+
+# Jupyter
+.ipynb_checkpoints/
+__marimo__/
+
+# IDE
+.vscode/
+.idea/
+
+# Large data files
+1.-preferential-tariffs.csv (1)/
