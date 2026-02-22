@@ -13,7 +13,7 @@ This project investigates whether pharmaceutical trade liberalization agreements
 All datasets are publicly available:
 
 1. **Preferential Tariff Data** — Chemicals & Allied Industries (HS2 = 30, Pharmaceutical products)
-   - Source: [ITC Market Access Map](https://www.macmap.org/)
+   - Source: [World Bank Deep Trade Agreements]((https://datatopics.worldbank.org/dta/table.html?utm_source=copilot.com))
    - File: `data/Chemicals_Allied_Industries.csv`
 
 2. **WTO PTA Agreement Data** — WTO+ and WTO-X provisions (legally enforceable)
