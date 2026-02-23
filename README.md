@@ -45,6 +45,9 @@ COVID-19 vaccines appear to be among the most affected products, particularly ac
 In contrast, **European (EURO) and Western Pacific (WPRO)** countries experience a comparatively smaller effect, possibly due to stronger regulatory frameworks and established procurement mechanisms that buffer against price fluctuations. 
 Vaccines such as **Hepatitis and Rabies** appear to be slightly less elastic to trade liberalization, which may reflect their more mature and stable global supply chains.
 
+<img width="989" height="590" alt="image" src="https://github.com/user-attachments/assets/786bd895-3da0-455b-9dc0-d8c4401d863a" />
+
+
 ## Limitations 
 
 Several important limitations should be noted. First, the **small sample size** at the Region x Vaccine level of aggregation raises concerns about overfitting, even with the regularized nuisance models used in LinearDML. 
