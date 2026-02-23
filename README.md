@@ -34,7 +34,25 @@ All datasets are publicly available:
 
 ## Key Finding
 
-A one standard deviation increase in trade liberalization score is associated with approximately a **50% increase** in vaccine price per dose. This counterintuitive result may reflect that regions with more extensive trade agreements also tend to procure higher-tier vaccines from more manufacturers — confounding that future work should address with more granular country-level data.
+The LinearDML model estimates a **positive Average Treatment Effect (ATE)**, suggesting that a one standard deviation increase in trade liberalization score is associated with an approximately **50% increase** in vaccine price per dose. 
+While this may appear counterintuitive at first glance, it is consistent with established trade theory: trade liberalization tends to reduce the price of traded goods through increased competition and lower tariffs, 
+which in turn can **raise domestic prices** as local markets adjust toward global price levels. 
+In the context of vaccines, greater openness to trade may expose regions to international pricing benchmarks, reducing the bargaining power that previously kept prices low in certain markets.
+
+Examining the **Conditional Average Treatment Effects (CATE)**, the positive effect of trade liberalization on vaccine prices is observed across all WHO regions, though the magnitude varies. 
+**South-East Asia (SEARO)** appears to experience the largest positive effect, suggesting that trade liberalization has a particularly strong upward pressure on vaccine prices in these markets. 
+COVID-19 vaccines appear to be among the most affected products, particularly across **SEARO, AMRO, and AFRO** regions, likely reflecting the intense global demand and pricing dynamics during the pandemic. 
+In contrast, **European (EURO) and Western Pacific (WPRO)** countries experience a comparatively smaller effect, possibly due to stronger regulatory frameworks and established procurement mechanisms that buffer against price fluctuations. 
+Vaccines such as **Hepatitis and Rabies** appear to be slightly less elastic to trade liberalization, which may reflect their more mature and stable global supply chains.
+
+## Limitations 
+
+Several important limitations should be noted. First, the **small sample size** at the Region x Vaccine level of aggregation raises concerns about overfitting, even with the regularized nuisance models used in LinearDML. 
+Second, and most critically, the model likely suffers from **omitted variable bias**. The confounders available in this analysis (number of manufacturers, annual volume, and deal count) are limited, 
+and important variables such as GDP per capita, healthcare expenditure, and disease burden are absent from the model. 
+These variables are known to correlate with both trade liberalization (more developed countries tend to be more liberal) and vaccine pricing (tiered pricing favors higher prices in wealthier nations), 
+and their omission may be inflating the positive ATE estimate. 
+Incorporating confounders from **sources external to trade agreement data** would help isolate the true causal effect of trade liberalization on vaccine prices and potentially reveal the expected negative relationship.
 
 ## How to Run
 
