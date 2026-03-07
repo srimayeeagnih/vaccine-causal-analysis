@@ -51,38 +51,38 @@ the effect vary systematically with country income level and health expenditure?
 
 ## Feature Preparation and Feature Engineering
 
-**Step 0** — Drops `gni_per_capita_usd` and the original `tariff_x_oop` interaction term (rebuilt below)
+**Step 0** : Drops `gni_per_capita_usd` and the original `tariff_x_oop` interaction term (rebuilt below)
 
-**Step 1 — Interaction: Tariff × Health Expenditure**
+**Step 1 : Interaction: Tariff × Health Expenditure**
 `tariff_health = pharma_tariff_rate × health_exp_pct_gdp`
 Captures whether tariff impact scales with a country's overall health spending level.
 
-**Step 2 — Interaction: Health Expenditure × OOP**
+**Step 2 : Interaction: Health Expenditure × OOP**
 `health_exp_oop_interaction = health_exp_pct_gdp × oop_health_exp_pct`
 Captures how total health spending relates to the private cost burden on individuals.
 
-**Step 3 — Missing Value Inspection**
+**Step 3 : Missing Value Inspection**
 Checks missingness counts and percentages for `health_exp_pct_gdp` and `oop_health_exp_pct`, overall and by country.
 
-**Step 4 — MICE Imputation**
+**Step 4 : MICE Imputation**
 Imputes missing values in `health_exp_pct_gdp` and `oop_health_exp_pct` using Multivariate Imputation by Chained Equations (linear regression, 10 iterations) — the two variables impute each other iteratively.
 
-**Step 5 — Categorical Encoding**
+**Step 5 : Categorical Encoding**
 Rare countries (< 0.5% frequency) collapsed into "Other". Label-encodes `unicef_region`, `country`, `vaccine`, `antigen_family`. `reporter_flag` and `gavi_eligible` left as-is (already binary).
 
-**Step 6 — Log-transform Outcome**
+**Step 6 : Log-transform Outcome**
 `immunization_coverage = log1p(immunization_coverage)`
 Reduces right skew and compresses the coverage variable scale.
 
-**Step 7 — Income Group Binning**
+**Step 7 : Income Group Binning**
 Bins `gdp_per_capita_usd` into World Bank income groups using standard thresholds:
 Low < $1,135 → 0 | Lower-middle < $4,465 → 1 | Upper-middle < $13,845 → 2 | High → 3
 Ordinal-encoded to preserve income ordering.
 
-**Step 8 — Anomaly Inspection (Visual)**
+**Step 8 : Anomaly Inspection (Visual)**
 Violin plots for 6 numeric variables to visually check for outliers. No removal performed.
 
-**Step 9 — Recency Control: Years Since Vaccine Introduction**
+**Step 9 : Recency Control: Years Since Vaccine Introduction**
 For each `country × antigen_family` pair, finds the first year with nonzero coverage and computes `years_since_intro = year − first_intro_year` (clipped at 0). Flags "established programs" (min coverage ≥ 50%) where true introduction pre-dates the data window, sets their `years_since_intro` to 0 and adds a binary `is_established_program` flag.
 
 Output saved to `pivot_dataset_fe.csv`.
@@ -91,7 +91,7 @@ Output saved to `pivot_dataset_fe.csv`.
 
 ## Causal Framework
 
-### Version 1 — Staggered DiD (Mixed Control Group)
+### Version 1 : Staggered DiD (Mixed Control Group)
 
 **What:** A single staggered DiD design using a mixed control group : EU-27 countries (always-treated, relabelled as `gname=0`) combined with a curated never-treated whitelist. Treatment was defined as any PTA containing Health, IPR, Consumer Protection, or Data Protection provisions (broad definition). Three estimators were run: TWFE (biased benchmark), Sun & Abraham (main), and LP-DiD (robustness). Cohort-level window cleaning was applied — entire cohorts were dropped if the latest-starting country in that cohort lacked sufficient pre-period data.
 
@@ -103,7 +103,7 @@ Output saved to `pivot_dataset_fe.csv`.
 
 ---
 
-### Version 2 — Country-Level Window Cleaning
+### Version 2 : Country-Level Window Cleaning
 
 **Improvements over V1:**
 - Switched to country-level window cleaning : only individual countries with insufficient pre-data are dropped, not their entire cohort; this recovered countries like JOR and MYS
@@ -117,7 +117,7 @@ Output saved to `pivot_dataset_fe.csv`.
 
 ---
 
-### Current Version — Explicit Two-Scenario Analysis
+### Current Version : Explicit Two-Scenario Analysis
 
 **Improvements over V2:**
 Two explicit scenarios are run separately, each with its own `build_panel()` call and full estimator suite (TWFE + Sun & Abraham + LP-DiD):
@@ -140,7 +140,7 @@ A cross-scenario overlay (LP-DiD S1 vs. S2) is produced to assess sensitivity to
 | X | Country-level mean covariates (GDP, health exp, OOP, population) | CATE moderators |
 | W | None | Intentionally excluded — see below |
 
-**Pre-processing — time detrending:**
+**Pre-processing : time detrending:**
 Before DML runs, a Ridge model fits E[Y | year dummies] and subtracts its prediction from Y. This removes secular global immunization trends (rising coverage over time due to global health initiatives) unrelated to PTAs. The DML operates on `Y_detrended`, which captures coverage variation unexplained by the calendar year.
 
 **Why year dummies are excluded from W:**
@@ -157,10 +157,10 @@ Before DML runs, a Ridge model fits E[Y | year dummies] and subtracts its predic
 
 ### Clustering
 
-**Step 5c — Country-level CATEs:**
+**Step 5c : Country-level CATEs:**
 The fitted DML model is evaluated at each country's mean covariate vector to produce one CATE per country, which is the predicted change in (detrended, log1p) immunization coverage attributable to having a health PTA in force. 90% CIs are produced via `effect_interval()`.
 
-**Step 5d — K-means (K=3):**
+**Step 5d : K-means (K=3):**
 - Input: [CATE + GDP + health_exp + OOP + population] per country, sourced from `panel_s2` (treated + never-treated S2 controls)
 - All variables standardized before clustering
 - K=3 produces low / medium / high treatment response groups
