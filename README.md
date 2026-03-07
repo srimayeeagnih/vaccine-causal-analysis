@@ -11,6 +11,10 @@ difference-in-differences for treatment effect estimation, robust estimators
 DML for doubly robust heterogeneous effect estimation, and K-means clustering for
 country segmentation by treatment response profile.
 
+**Why This Project Matters**
+
+This project highlights the importance of systems thinking when working with messy, real-world data and explores how economic policy decisions may indirectly influence public health outcomes. One group of stakeholders this could affect is pharmaceutical distributors, especially if tariff costs end up being absorbed within the supply chain.
+
 ---
 
 ## Research Question
@@ -36,7 +40,7 @@ the effect vary systematically with country income level and health expenditure?
 
 ---
 
-## Data Merging Strategy
+## Data Wrangling and Merging
 
 1. Load WUENIC non-EPI coverage sheets only : PCV3, ROTAC, HIB3 (vaccines most price-sensitive in middle-income markets)
 2. Merge World Bank covariates on `country_iso3 × year` (GDP, health expenditure, population, GNI, GAVI eligibility)
