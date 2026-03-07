@@ -42,14 +42,14 @@ the effect vary systematically with country income level and health expenditure?
 
 ## Data Wrangling and Merging
 
-**1**. Load WUENIC non-EPI coverage sheets only : PCV3, ROTAC, HIB3 (vaccines most price-sensitive in middle-income markets)
-**2**. Merge World Bank covariates on `country_iso3 × year` (GDP, health expenditure, population, GNI, GAVI eligibility)
-**3**. Filter to non-GAVI countries (`gavi_eligible == 0`) : removes subsidised markets where the tariff → price → coverage chain is broken
-**4**. Merge pharma tariff rate on `country_iso3` (static; no year dimension) and flag reporter countries
-**5**. Filter to reporter countries only (`reporter_flag == 1`) : retains only countries with direct tariff observations
-**6**. Merge out-of-pocket (OOP) health expenditure on `country_iso3 × year`
-**7**. Construct interaction treatment: `tariff_x_oop = pharma_tariff_rate × oop_health_exp_pct / 100`
-**8**. Restrict to the target year range (default 1980–2023)
+**1**: Load WUENIC non-EPI coverage sheets only : PCV3, ROTAC, HIB3 (vaccines most price-sensitive in middle-income markets)
+**2**: Merge World Bank covariates on `country_iso3 × year` (GDP, health expenditure, population, GNI, GAVI eligibility)
+**3**: Filter to non-GAVI countries (`gavi_eligible == 0`) : removes subsidised markets where the tariff → price → coverage chain is broken
+**4**: Merge pharma tariff rate on `country_iso3` (static; no year dimension) and flag reporter countries
+**5**: Filter to reporter countries only (`reporter_flag == 1`) : retains only countries with direct tariff observations
+**6**: Merge out-of-pocket (OOP) health expenditure on `country_iso3 × year`
+**7**: Construct interaction treatment: `tariff_x_oop = pharma_tariff_rate × oop_health_exp_pct / 100`
+**8**: Restrict to the target year range (default 1980–2023)
 
 ---
 
@@ -185,7 +185,7 @@ Pre-treatment coefficients are statistically significant across both Scenario 1 
 
 ### Treatment Effect Heterogeneity
 
-![CATE Clusters](outputs/visualization/heterogeneity_viz.png)
+![Heterogeneity](outputs/visualization/heterogeneity_viz.png)
 
 **Plot 1: Mean CATE by WHO Region**
 
