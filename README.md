@@ -1,4 +1,4 @@
-# Immunization Causal Analysis : Pharma PTAs and Immunization Coverage
+# Causal Analysis : Pharma PTAs and Immunization Coverage
 
 ## Project Overview
 
@@ -175,15 +175,19 @@ Pre-treatment coefficients are statistically significant across both Scenario 1 
 
 ### Treatment Effect Heterogeneity
 
-![Heterogeneity](outputs/visualization/heterogeneity_viz.png)
+![Mean_CATE](outputs/visualization/Mean_CATE.png)
 
 **Plot 1: Mean CATE by WHO Region**
 
 SEARO has the highest mean effect (around 0.33 pp log-coverage), though the confidence interval is wide given only 3 countries, so this should be read with caution. EMRO comes next at around 0.19, driven largely by Gulf states like Saudi Arabia, Kuwait, Qatar, and Bahrain. WPRO follows at roughly 0.15, anchored by Malaysia and Thailand. AMRO and EURO are both near zero, which makes sense given that Western high-income countries have little room left for PTA-driven improvements. The single "Other" country shows a negative CATE and is likely a structural outlier.
 
+![CATE_vs_GDP](outputs/visualization/CATE_vs_GDP.png)
+
 **Plot 2: CATE vs GDP per Capita**
 
 The clearest pattern here is that high-CATE countries cluster in the $10k to $40k GDP range (Cluster 0, red). Countries above $50k GDP (Cluster 1, blue) show near-zero or slightly negative CATEs, consistent with ceiling effects in already well-covered populations. Cluster 2 (green) sits at low GDP with CATEs close to zero, suggesting that structural barriers at that income level absorb whatever benefit a PTA might otherwise deliver. One red point with a CATE around 0.55 at very low GDP stands out as a potential outlier worth checking.
+
+![PCA](outputs/visualization/PCA.png)
 
 **Plot 3: PCA Country Clusters**
 
