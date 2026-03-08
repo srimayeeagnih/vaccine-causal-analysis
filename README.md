@@ -1,4 +1,4 @@
-# Vaccine Causal Analysis : Pharma PTAs and Immunization Coverage
+# Immunization Causal Analysis : Pharma PTAs and Immunization Coverage
 
 ## Project Overview
 
